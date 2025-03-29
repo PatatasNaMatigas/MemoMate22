@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/subject_background"
+    android:elevation="2dp"
+    android:layout_margin="8dp">
+
+    <TextView
+        android:id="@+id/taskSubject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:text="Subject Name"/>
+
+    <TextView
+        android:id="@+id/taskName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#B1925B"
+        android:text="Task Name"/>
+
+    <TextView
+        android:id="@+id/taskDueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Due in: X Days"
+        android:textSize="14sp"
+        android:textColor="#B1925B"/>
+    <TextView
+        android:id="@+id/dueDays1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Due in: 0 Days"
+        android:textSize="14sp"
+        android:textColor="#B1925B"/>
+
+    <Button
+        android:id="@+id/btnDeleteTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:focusable="false"
+        android:clickable="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="#B71C1C"
+        android:padding="5dp"
+        android:textColor="#FFFFFF" />
+</LinearLayout>
