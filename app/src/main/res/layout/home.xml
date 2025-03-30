@@ -1,15 +1,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/home_page"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <!-- Top Bar -->
     <LinearLayout
+        android:id="@+id/Header"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:elevation="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -22,9 +25,9 @@
             android:backgroundTint="@color/black"
             android:background="@drawable/menubutton"/>
 
-
         <!-- Title  -->
         <View
+            android:id="@+id/Title1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.6
@@ -41,6 +44,7 @@
 
         <!-- Spacer to balance layout -->
         <View
+            android:id="@+id/Title2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
@@ -60,6 +64,7 @@
 
         <!-- Streak Box -->
         <LinearLayout
+            android:id="@+id/Taskcounter"
             android:layout_width="0dp"
             android:layout_height="212dp"
             android:layout_weight="1"
@@ -68,6 +73,7 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/TaskTitle"
                 android:layout_width="94dp"
                 android:layout_height="wrap_content"
                 android:text="Tasks"
@@ -85,6 +91,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/StreakCounter"
             android:layout_width="0dp"
             android:layout_height="213dp"
             android:layout_weight="1"
@@ -93,6 +100,7 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/StreakTitle"
                 android:layout_width="135dp"
                 android:layout_height="wrap_content"
                 android:text="Streak"
@@ -111,8 +119,11 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/content1"
+        app:layout_constraintTop_toBottomOf="@id/stats"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp">
 
         <!-- Other content above -->
 
@@ -126,6 +137,7 @@
             android:scrollbars="vertical"/>
 
         <LinearLayout
+            android:id="@+id/content2"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
@@ -145,6 +157,7 @@
 
     <View
         android:id="@+id/filter"
+        android:elevation="3dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0"
@@ -152,15 +165,18 @@
 
     <View
         android:id="@+id/drawer"
+        android:elevation="3dp"
         android:layout_width="250dp"
         android:layout_height="match_parent"
         android:background="?attr/colorPrimary"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
         android:id="@+id/exit_drawer"
+        android:textColor="@color/white"
+        android:elevation="4dp"
         android:layout_width="0dp"
         android:alpha="0"
         android:layout_height="match_parent"
@@ -170,6 +186,7 @@
 
     <ImageView
         android:id="@+id/top"
+        android:elevation="3dp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/top"
@@ -181,6 +198,7 @@
 
     <ImageView
         android:id="@+id/home_icon"
+        android:elevation="3dp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/home"
@@ -194,27 +212,28 @@
 
     <Button
         android:id="@+id/home"
+        android:textColor="@color/white"
+        android:elevation="4dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/none"
+        android:background="@drawable/button_background"
         android:text="Home"
-        android:fontFamily="@font/citrus"
         android:paddingTop="4dp"
         android:paddingStart="20dp"
         android:textSize="30sp"
         android:gravity="start|center"
-        android:textColor="@color/buttonColor"
         app:layout_constraintTop_toBottomOf="@+id/top"
         app:layout_constraintStart_toEndOf="@+id/home_icon"
         app:layout_constraintEnd_toEndOf="@id/drawer"/>
 
     <ImageView
         android:id="@+id/summary_icon"
+        android:elevation="3dp"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/summary"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
+        android:src="@drawable/history"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toBottomOf="@+id/home_icon"
         app:layout_constraintStart_toStartOf="@+id/drawer"
@@ -222,64 +241,31 @@
 
     <Button
         android:id="@+id/summary"
+        android:textColor="@color/white"
+        android:elevation="4dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/none"
-        android:text="Summary"
-        android:fontFamily="@font/citrus"
+        android:background="@drawable/button_background"
+        android:text="History"
         android:paddingTop="4dp"
         android:paddingStart="20dp"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:gravity="start|center"
-        android:textColor="@color/unactivatedTextColor"
         app:layout_constraintStart_toEndOf="@id/summary_icon"
         app:layout_constraintEnd_toEndOf="@id/drawer"
-        app:layout_constraintTop_toBottomOf="@id/home" />
-
-    <ImageView
-        android:id="@+id/mental_health_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/mind_health"
-        android:scaleX="0.6"
-        android:scaleY="0.6"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintTop_toBottomOf="@+id/summary"
-        app:layout_constraintStart_toStartOf="@+id/drawer"
-        app:layout_constraintBottom_toBottomOf="@id/mental_health_data" />
-
-    <Button
-        android:id="@+id/mental_health_data"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/none"
-        android:text="Mental Health"
-        android:fontFamily="@font/citrus"
-        android:paddingTop="4dp"
-        android:paddingStart="20dp"
-        android:textSize="30sp"
-        android:gravity="start|center"
-        android:textColor="@color/unactivatedTextColor"
-        app:layout_constraintStart_toEndOf="@id/summary_icon"
-        app:layout_constraintEnd_toEndOf="@id/drawer"
-        app:layout_constraintTop_toBottomOf="@id/summary" />
+        app:layout_constraintTop_toBottomOf="@id/home"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="15sp"
+        android:autoSizeMaxTextSize="30sp"
+        android:autoSizeStepGranularity="1dp" />
 
     <View
         android:id="@+id/line1"
+        android:elevation="3dp"
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:background="@color/buttonBorderColor"
         app:layout_constraintStart_toStartOf="@id/drawer"
         app:layout_constraintEnd_toEndOf="@id/drawer"
-        app:layout_constraintTop_toBottomOf="@id/mental_health_data" />
-
-    <View
-        android:id="@+id/line2"
-        android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:background="@color/buttonBorderColor"
-        app:layout_constraintStart_toStartOf="@id/drawer"
-        app:layout_constraintEnd_toEndOf="@id/drawer"
-        app:layout_constraintBottom_toTopOf="@id/account" />
+        app:layout_constraintTop_toBottomOf="@id/summary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

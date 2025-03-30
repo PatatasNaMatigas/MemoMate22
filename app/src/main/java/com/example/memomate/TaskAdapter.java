@@ -16,7 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.memomate.Main;
 import com.example.memomate.R;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -102,6 +106,61 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                             taskList.remove(position);
                             notifyItemRemoved(position);
                             notifyItemRangeChanged(position, taskList.size());
+
+                            File tasksDirectory = new File(context.getFilesDir(), "tasks");
+                            if (!tasksDirectory.exists() || !tasksDirectory.isDirectory()) {
+                                return;
+                            }
+
+                            // ✅ List only `.txt` files
+                            File[] files = tasksDirectory.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
+                            if (files == null) return;
+
+                            ((TextView)context.findViewById(R.id.currentTask)).setText(String.valueOf(files.length));
+
+                            File file = new File(context.getFilesDir(), "streak.txt");
+                            if (!file.exists()) {
+                                try {
+                                    file.createNewFile();
+                                    FileWriter initWriter = new FileWriter(file);
+                                    initWriter.write("0"); // Initialize with "0"
+                                    initWriter.close();
+                                } catch (IOException e) {
+                                    Log.e("MemoMate", "❌ Error creating streak file", e);
+                                }
+                            }
+
+                            BufferedReader reader = null;
+                            FileWriter writer = null;
+                            try {
+                                // Read the current streak
+                                reader = new BufferedReader(new FileReader(file));
+                                String line = reader.readLine();
+                                reader.close(); // Close reader before writing
+
+                                int streak = (line == null || line.isEmpty()) ? 0 : Integer.parseInt(line);
+                                streak++; // Increment streak
+
+                                // Write updated streak
+                                writer = new FileWriter(file, false); // false = overwrite mode
+                                writer.write(String.valueOf(streak));
+                                writer.close(); // Close writer after writing
+
+                                // Update UI
+                                ((TextView) context.findViewById(R.id.streak)).setText(String.valueOf(streak));
+
+                                Log.d("MemoMate", "✅ Streak updated: " + streak);
+                            } catch (IOException | NumberFormatException e) {
+                                Log.e("MemoMate", "❌ Error updating streak", e);
+                            } finally {
+                                try {
+                                    if (reader != null) reader.close();
+                                    if (writer != null) writer.close();
+                                } catch (IOException e) {
+                                    Log.e("MemoMate", "❌ Error closing file streams", e);
+                                }
+                            }
+
                         } else {
                             Log.e("MemoMate", "❌ Error: Failed to move file to completed_tasks folder.");
                         }
@@ -110,5 +169,4 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 .setNegativeButton("No", null)
                 .show();
     }
-
 }
