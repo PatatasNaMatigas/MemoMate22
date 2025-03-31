@@ -30,6 +30,7 @@ public class LogIn extends AppCompatActivity {
         login.setOnClickListener((k -> {
             if (!userName.getText().toString().isEmpty() && !passWord.getText().toString().isEmpty()) {
                 startActivity(new Intent(this, Main.class));
+                finish();
             }
         }));
 

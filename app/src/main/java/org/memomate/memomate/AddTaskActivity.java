@@ -62,6 +62,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 fileWriter.write(subjectText + "\n" + taskNameText + "\n" + selectedDate + "\n" + selectedTime);
 
                 startActivity(new Intent(this, Main.class));
+                finish();
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -77,6 +78,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
         cancelButton.setOnClickListener(view -> {
             startActivity(new Intent(this, Main.class));
+            finish();
         });
     }
 

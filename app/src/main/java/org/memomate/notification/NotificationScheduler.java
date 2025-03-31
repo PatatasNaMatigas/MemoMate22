@@ -39,8 +39,6 @@ public class NotificationScheduler {
                 String dueDate = reader.readLine();
                 String dueTime = reader.readLine();
 
-                Log.d("Scheduler", "Reading task from file: " + taskFile.getName());
-                Log.d("Scheduler", "Task details: " + subjectName + ", " + taskName + ", " + dueDate + ", " + dueTime);
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
                 Calendar dueCalendar = Calendar.getInstance();

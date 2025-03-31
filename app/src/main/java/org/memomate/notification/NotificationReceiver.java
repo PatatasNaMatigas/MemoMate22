@@ -8,19 +8,24 @@ import androidx.core.app.NotificationCompat;
 
 import org.memomate.memomate.R;
 
-import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("NotificationReceiver--", "Notification received!");
+
         String taskName = intent.getStringExtra("taskName");
         long triggerTime = intent.getLongExtra("triggerTime", 0);
 
-
-        long currentTime = Calendar.getInstance().getTimeInMillis();
+        long currentTime = System.currentTimeMillis();
         long remainingTime = triggerTime - currentTime;
+
+        if (remainingTime <= 0) {
+            Log.d("NotificationReceiver", "Task is already due or overdue!");
+            return; // Prevents sending incorrect notifications
+        }
 
         String timeMessage = getTimeMessage(remainingTime);
 
@@ -37,12 +42,13 @@ public class NotificationReceiver extends BroadcastReceiver {
     }
 
     private String getTimeMessage(long remainingTimeMillis) {
-        long minutes = remainingTimeMillis / (1000 * 60);
-        if (minutes >= 60) {
-            long hours = minutes / 60;
-            return "in " + hours + " hours";
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(remainingTimeMillis);
+        long hours = TimeUnit.MILLISECONDS.toHours(remainingTimeMillis);
+
+        if (hours > 0) {
+            return "in " + hours + (hours == 1 ? " hour" : " hours");
         } else {
-            return "in " + minutes + " minutes";
+            return "in " + minutes + (minutes == 1 ? " minute" : " minutes");
         }
     }
 }

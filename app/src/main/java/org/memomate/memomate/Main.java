@@ -1,5 +1,6 @@
 package org.memomate.memomate;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionManager;
@@ -23,13 +24,17 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Main extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private TaskAdapter taskAdapter;
-    private List<Task> taskList = new ArrayList<>();
+    private static TaskAdapter taskAdapter;
+    private static List<Task> taskList = new ArrayList<>();
     public static int tasks = 0;
 
     @Override
@@ -44,7 +49,10 @@ public class Main extends AppCompatActivity {
         taskAdapter = new TaskAdapter(this, taskList, true);
         recyclerView.setAdapter(taskAdapter);
 
-        addTaskButton.setOnClickListener(k -> startActivity(new Intent(this, AddTaskActivity.class)));
+        addTaskButton.setOnClickListener(k -> {
+            startActivity(new Intent(this, AddTaskActivity.class));
+            finish();
+        });
 
         ConstraintLayout constraintLayout = findViewById(R.id.home_page);
 
@@ -127,6 +135,7 @@ public class Main extends AppCompatActivity {
 
         findViewById(R.id.history).setOnClickListener(view -> {
             startActivity(new Intent(this, History.class));
+            finish();
         });
 
         loadTasks();
@@ -141,7 +150,14 @@ public class Main extends AppCompatActivity {
         NotificationScheduler.rescheduleTasks(this);
     }
 
-    private void loadTasks() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("ADADADA", "onResume");
+        loadTasks();
+    }
+
+    public void loadTasks() {
         File tasksDirectory = new File(getFilesDir(), "tasks");
         if (!tasksDirectory.exists() || !tasksDirectory.isDirectory()) {
             return;
@@ -161,6 +177,18 @@ public class Main extends AppCompatActivity {
                 String dueDate = bufferedReader.readLine();
                 String dueTime = bufferedReader.readLine();
 
+                float daysLeft = getDaysLeft(dueDate, dueTime);
+                if (daysLeft <= 0) {
+                    File streaks = new File(getFilesDir(), "streak.txt");
+                    if (!streaks.exists()) {
+                        streaks.createNewFile();
+                        FileWriter writer = new FileWriter(streaks);
+                        writer.write("0");
+                        writer.close();
+                        ((TextView) findViewById(R.id.streak_count)).setText("0");
+                    }
+                }
+
                 taskList.add(new Task(subject, taskName, dueDate, dueTime));
                 Log.d("MemoMate", "✅ Loaded Task: " + subject + " - " + taskName);
             } catch (Exception e) {
@@ -170,6 +198,7 @@ public class Main extends AppCompatActivity {
 
         taskAdapter.notifyDataSetChanged();
     }
+
     public static class Task {
         public String subject;
         public String taskName;
@@ -200,5 +229,31 @@ public class Main extends AppCompatActivity {
         int streakValue = (line == null || line.isEmpty()) ? 0 : Integer.parseInt(line);
 
         ((TextView) findViewById(R.id.streak_count)).setText(String.valueOf(streakValue));
+    }
+
+    private float getDaysLeft(String dueDate, String dueTime) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+        try {
+            Date dueDateTime = sdf.parse(dueDate + " " + dueTime);
+            if (dueDateTime == null) return -1;
+
+            long currentTimeMillis = System.currentTimeMillis();
+            long dueTimeMillis = dueDateTime.getTime();
+
+            long diffMillis = dueTimeMillis - currentTimeMillis;
+            if (diffMillis <= 0) return 0; // Task is due
+
+            // Convert to days
+            float daysLeft = (float) diffMillis / (1000 * 60 * 60 * 24);
+
+            // If ≤ 1 day, return hours instead
+            if (daysLeft <= 1) {
+                return (float) diffMillis / (1000 * 60 * 60); // Convert to hours
+            }
+
+            return Float.parseFloat(String.format(Locale.getDefault(), "%.2f", daysLeft));
+        } catch (ParseException e) {
+            return -1; // Error case
+        }
     }
 }
