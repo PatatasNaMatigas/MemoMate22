@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/padding"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Subject:"
+            android:background="@drawable/edittext_bg"
+            android:padding="10dp"
+            android:textColor="#000"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/taskName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Task:"
+            android:background="@drawable/edittext_bg"
+            android:padding="10dp"
+            android:textColor="#000"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/dueDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Set Date:"
+            android:background="@drawable/edittext_bg"
+            android:padding="10dp"
+            android:textColor="#000"
+            android:layout_marginTop="10dp"
+            android:focusable="false"
+            android:clickable="true"/>
+
+        <EditText
+            android:id="@+id/dueTime"
+            android:layout_width="match_parent"
+            android:background="@drawable/edittext_bg"
+            android:layout_height="wrap_content"
+            android:hint="Select Due Time:"
+            android:padding="10dp"
+            android:textColor="#000"
+            android:layout_marginTop="10dp"
+            android:focusable="false"
+            android:clickable="true"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+
+            <!-- Cancel Button with Overlay Text -->
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="65dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="13dp">
+
+                <ImageButton
+                    android:id="@+id/cancelButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/none"
+                    android:src="@drawable/button"
+                    android:scaleType="centerInside"/>
+
+                <org.memomate.ui.StrokedTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Cancel"
+                    android:fontFamily="@font/bubble"
+                    android:textColor="#F8736F"
+                    android:textSize="30sp"
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+            </FrameLayout>
+
+            <!-- Add Button with Overlay Text -->
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="65dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/addButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/none"
+                    android:src="@drawable/button"
+                    android:scaleType="centerInside"/>
+
+                <org.memomate.ui.StrokedTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Done"
+                    android:fontFamily="@font/bubble"
+                    android:textColor="#D7CA61"
+                    android:textSize="30sp"
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

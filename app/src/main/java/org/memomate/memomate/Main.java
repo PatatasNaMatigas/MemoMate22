@@ -1,10 +1,11 @@
-package com.example.memomate;
+package org.memomate.memomate;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.memomate.history.History;
+import org.memomate.notification.NotificationBuilder;
+import org.memomate.notification.NotificationScheduler;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,11 +37,11 @@ public class Main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-        Button addTaskButton = findViewById(R.id.add_task);
+        ImageButton addTaskButton = findViewById(R.id.add_task);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        taskAdapter = new TaskAdapter(this, taskList);
+        taskAdapter = new TaskAdapter(this, taskList, true);
         recyclerView.setAdapter(taskAdapter);
 
         addTaskButton.setOnClickListener(k -> startActivity(new Intent(this, AddTaskActivity.class)));
@@ -45,12 +50,12 @@ public class Main extends AppCompatActivity {
 
         Button exitDrawer = findViewById(R.id.exit_drawer);
 
-        Button popDrawer = findViewById(R.id.menuIcon);
+        ImageButton popDrawer = findViewById(R.id.menu_icon);
         popDrawer.setOnClickListener(view -> {
             Log.d("DEBUG","popDrawer");
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(constraintLayout);
-            constraintSet.clear(R.id.drawer, ConstraintSet.END); // Clear top constraint
+            constraintSet.clear(R.id.drawer, ConstraintSet.END);
             constraintSet.connect(R.id.drawer, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
             popDrawer.animate()
                     .alpha(0f)
@@ -120,12 +125,20 @@ public class Main extends AppCompatActivity {
             constraintSet.applyTo(constraintLayout);
         });
 
+        findViewById(R.id.history).setOnClickListener(view -> {
+            startActivity(new Intent(this, History.class));
+        });
+
         loadTasks();
         try {
-            streak();
+            loadStreak();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        NotificationBuilder.createNotificationChannel(this);
+        NotificationScheduler.scheduleNotifications(this);
+        NotificationScheduler.rescheduleTasks(this);
     }
 
     private void loadTasks() {
@@ -134,12 +147,11 @@ public class Main extends AppCompatActivity {
             return;
         }
 
-        // ✅ List only `.txt` files
         File[] files = tasksDirectory.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
         if (files == null) return;
 
         tasks = files.length;
-        ((TextView) findViewById(R.id.currentTask)).setText(String.valueOf(files.length));
+        ((TextView) findViewById(R.id.tasks_count)).setText(String.valueOf(files.length));
 
         taskList.clear();
         for (File file : files) {
@@ -156,7 +168,7 @@ public class Main extends AppCompatActivity {
             }
         }
 
-        taskAdapter.notifyDataSetChanged(); // Refresh RecyclerView
+        taskAdapter.notifyDataSetChanged();
     }
     public static class Task {
         public String subject;
@@ -171,12 +183,13 @@ public class Main extends AppCompatActivity {
             this.dueTime = dueTime;
         }
     }
-    public void streak() throws IOException {
+
+    public void loadStreak() throws IOException {
         File file = new File(getFilesDir(), "streak.txt");
         if (!file.exists()) {
             file.createNewFile();
             FileWriter writer = new FileWriter(file);
-            writer.write("0"); // Initialize with 0
+            writer.write("0");
             writer.close();
         }
 
@@ -186,7 +199,6 @@ public class Main extends AppCompatActivity {
 
         int streakValue = (line == null || line.isEmpty()) ? 0 : Integer.parseInt(line);
 
-        // ✅ Convert integer to String properly
-        ((TextView) findViewById(R.id.streak)).setText(String.valueOf(streakValue));
+        ((TextView) findViewById(R.id.streak_count)).setText(String.valueOf(streakValue));
     }
 }

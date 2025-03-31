@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    namespace = "com.example.memomate"
+    namespace = "org.memomate.memomate"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.memomate"
-        minSdk = 24
+        applicationId = "org.memomate.memomate"
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"

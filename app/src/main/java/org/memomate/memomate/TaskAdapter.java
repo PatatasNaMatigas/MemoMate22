@@ -1,7 +1,6 @@
-package com.example.memomate;
+package org.memomate.memomate;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,27 +12,23 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.memomate.Main;
-import com.example.memomate.R;
-
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
+
     private final List<Main.Task> taskList;
     private final AppCompatActivity context;
-    private String subjectText = "";
-    private String taskNameText = "";
-    public TaskAdapter(AppCompatActivity context, List<Main.Task> taskList) {
+    private final boolean completable;
+
+    public TaskAdapter(AppCompatActivity context, List<Main.Task> taskList, boolean completable) {
         this.context = context;
         this.taskList = taskList;
+        this.completable = completable;
     }
 
     @NonNull
@@ -43,19 +38,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         return new TaskViewHolder(view);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         Main.Task task = taskList.get(position);
         holder.subjectText.setText(task.subject);
         holder.taskNameText.setText(task.taskName);
         holder.dueDateText.setText("Due: " + task.dueDate + " " + task.dueTime);
-        subjectText = task.subject;
-        taskNameText = task.taskName;
 
         holder.itemView.setOnClickListener(v -> {
-            showCompletionDialog(position);
-
+            if (completable)
+                showCompletionDialog(position);
         });
     }
 
@@ -116,7 +108,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                             File[] files = tasksDirectory.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
                             if (files == null) return;
 
-                            ((TextView)context.findViewById(R.id.currentTask)).setText(String.valueOf(files.length));
+                            ((TextView)context.findViewById(R.id.tasks_count)).setText(String.valueOf(files.length));
 
                             File file = new File(context.getFilesDir(), "streak.txt");
                             if (!file.exists()) {
@@ -147,7 +139,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                                 writer.close(); // Close writer after writing
 
                                 // Update UI
-                                ((TextView) context.findViewById(R.id.streak)).setText(String.valueOf(streak));
+                                ((TextView) context.findViewById(R.id.streak_count)).setText(String.valueOf(streak));
 
                                 Log.d("MemoMate", "✅ Streak updated: " + streak);
                             } catch (IOException | NumberFormatException e) {

@@ -1,9 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Move uses-permission outside application -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
 
     <application
         android:allowBackup="true"
@@ -16,7 +17,21 @@
         android:theme="@style/Theme.MemoMate"
         tools:targetApi="31">
 
-        <activity android:name="com.example.memomate.LogIn"
+        <receiver android:name="org.memomate.notification.BootReceiver" android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="org.memomate.notification.NotificationReceiver"
+            android:exported="false"
+            android:permission="android.permission.VIBRATE">
+        </receiver>
+
+
+        <activity android:name="org.memomate.memomate.LogIn"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,5 +41,6 @@
 
         <activity android:name=".Main" android:screenOrientation="portrait" android:launchMode="singleTop"/>
         <activity android:name=".AddTaskActivity" android:screenOrientation="portrait" android:launchMode="singleTop"/>
+        <activity android:name="org.memomate.history.History" android:screenOrientation="portrait" android:launchMode="singleTop"/>
     </application>
 </manifest>

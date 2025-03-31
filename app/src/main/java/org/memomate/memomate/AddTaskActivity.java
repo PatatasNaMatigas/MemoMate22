@@ -1,12 +1,14 @@
-package com.example.memomate;
+package org.memomate.memomate;
+
+import static org.memomate.notification.NotificationScheduler.saveTask;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,16 +25,14 @@ public class AddTaskActivity extends AppCompatActivity {
     EditText subject = null;
     EditText taskName = null;
     EditText dueTime = null;
-    Button addButton = null;
-    Button cancelButton = null;
-
-
+    ImageButton addButton = null;
+    ImageButton cancelButton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_task_activity);
+        setContentView(R.layout.add_task);
         initializeFiles();
         initializeUI();
     }
@@ -66,6 +66,13 @@ public class AddTaskActivity extends AppCompatActivity {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+            saveTask(
+                    this,
+                    dueDate.getText().toString(),
+                    dueTime.getText().toString(),
+                    taskName.getText().toString()
+            );
         });
 
         cancelButton.setOnClickListener(view -> {

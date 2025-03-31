@@ -9,47 +9,50 @@
         android:id="@+id/holder"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:elevation="10dp"
         android:background="@drawable/rounded_corner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.9" />
 
-    <TextView
+    <org.memomate.ui.StrokedTextView
         android:id="@+id/subject"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:elevation="11dp"
         android:textSize="21dp"
         android:text="Course Name"
-        android:textStyle="bold"
+        android:paddingHorizontal="5dp"
+        android:textColor="#C07041"
+        android:fontFamily="@font/bubble"
         android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toStartOf="@id/holder"
         app:layout_constraintTop_toTopOf="@id/holder" />
 
-    <TextView
+    <org.memomate.ui.StrokedTextView
         android:id="@+id/taskName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Task Name"
         android:textSize="14sp"
-        android:elevation="11dp"
+        android:paddingHorizontal="5dp"
+        android:textColor="#C07041"
+        android:fontFamily="@font/bubble"
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toStartOf="@id/holder"
         app:layout_constraintTop_toBottomOf="@id/subject"/>
 
-    <TextView
+    <org.memomate.ui.StrokedTextView
         android:id="@+id/dueDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Due Date: MM/DD/YYYY HH:mm"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="14sp"
-        android:textStyle="italic"
-        android:elevation="11dp"
+        android:fontFamily="@font/bubble"
+        android:paddingHorizontal="5dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="@id/holder"
         app:layout_constraintTop_toBottomOf="@id/taskName" />
 
@@ -57,44 +60,46 @@
         android:id="@+id/holder_remaining_day"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:elevation="11dp"
-        android:background="@drawable/rounded_background"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="@id/holder"
         app:layout_constraintTop_toTopOf="@id/holder" />
 
-    <TextView
+    <org.memomate.ui.StrokedTextView
         android:id="@+id/tv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Due in:"
         android:textStyle="bold"
-        android:elevation="11dp"
         android:layout_marginTop="5dp"
+        android:textColor="#C07041"
+        android:fontFamily="@font/bubble"
+        android:paddingHorizontal="5dp"
         app:layout_constraintStart_toStartOf="@id/holder_remaining_day"
         app:layout_constraintEnd_toEndOf="@id/holder_remaining_day"
         app:layout_constraintTop_toTopOf="@id/holder_remaining_day"/>
 
-    <TextView
+    <org.memomate.ui.StrokedTextView
         android:id="@+id/dayleft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:elevation="11dp"
+        android:textColor="#C07041"
+        android:fontFamily="@font/bubble"
+        android:paddingHorizontal="5dp"
         app:layout_constraintStart_toStartOf="@id/holder_remaining_day"
         app:layout_constraintEnd_toEndOf="@id/holder_remaining_day"
         app:layout_constraintTop_toBottomOf="@id/tv1"/>
 
-    <TextView
+    <org.memomate.ui.StrokedTextView
         android:id="@+id/tv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Days"
-        android:textStyle="bold"
-        android:elevation="11dp"
+        android:textColor="#C07041"
+        android:fontFamily="@font/bubble"
+        android:paddingHorizontal="5dp"
         app:layout_constraintStart_toStartOf="@id/holder_remaining_day"
         app:layout_constraintEnd_toEndOf="@id/holder_remaining_day"
         app:layout_constraintTop_toBottomOf="@id/dayleft"/>

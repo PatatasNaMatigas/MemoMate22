@@ -1,11 +1,9 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/home_page"
-    android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:id="@+id/history_page"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageButton
         android:id="@+id/menu_icon"
@@ -13,11 +11,9 @@
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
         android:layout_marginStart="15dp"
-        android:scaleX="0.65"
-        android:scaleY="0.65"
         android:background="@color/none"
-        android:scaleType="centerInside"
         android:src="@drawable/menu"
+        android:scaleType="centerInside"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintWidth_percent="0.15"
         app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +34,7 @@
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="MemoMate"
+        android:text="history"
         android:textColor="#FCE69B"
         android:textStyle="bold"
         android:fontFamily="@font/bubble"
@@ -54,116 +50,16 @@
         app:layout_constraintTop_toTopOf="@id/menu_icon"
         app:layout_constraintBottom_toBottomOf="@id/menu_icon" />
 
-    <View
-        android:id="@+id/task_div"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="15dp"
-        app:layout_constraintHeight_percent="0.2"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintEnd_toStartOf="@id/streak_div"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <org.memomate.ui.StrokedTextView
-        android:id="@+id/task_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Tasks"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:fontFamily="@font/bubble"
-        android:textColor="#CDE8DB"
-        app:layout_constraintTop_toTopOf="@id/task_div"
-        app:layout_constraintEnd_toEndOf="@id/task_div"
-        app:layout_constraintStart_toStartOf="@id/task_div" />
-
-    <org.memomate.ui.StrokedTextView
-        android:id="@+id/tasks_count"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textAlignment="center"
-        android:textSize="50sp"
-        android:fontFamily="@font/bubble"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@id/task_div"
-        app:layout_constraintEnd_toEndOf="@id/task_div"
-        app:layout_constraintTop_toBottomOf="@id/task_title"/>
-
-    <View
-        android:id="@+id/streak_div"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        app:layout_constraintHeight_percent="0.2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/task_div"
-        app:layout_constraintTop_toBottomOf="@id/title" />
-
-    <org.memomate.ui.StrokedTextView
-        android:id="@+id/streak_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Streak"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:fontFamily="@font/bubble"
-        android:textColor="#CDE8DB"
-        app:layout_constraintTop_toTopOf="@id/streak_div"
-        app:layout_constraintEnd_toEndOf="@id/streak_div"
-        app:layout_constraintStart_toStartOf="@id/streak_div" />
-
-    <org.memomate.ui.StrokedTextView
-        android:id="@+id/streak_count"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textAlignment="center"
-        android:textSize="50sp"
-        android:fontFamily="@font/bubble"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@id/streak_div"
-        app:layout_constraintEnd_toEndOf="@id/streak_div"
-        app:layout_constraintTop_toBottomOf="@id/task_title"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tasks_count"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="15dp"
-        android:scrollbars="vertical"/>
-
-    <View
-        android:id="@+id/footer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:background="@drawable/rounded_top"
-        app:layout_constraintHeight_percent="0.08"
+        android:scrollbars="vertical"
+        android:layout_marginVertical="15dp"
+        android:layout_marginHorizontal="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <ImageButton
-        android:id="@+id/add_task"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/none"
-        android:src="@drawable/add_task"
-        android:scaleType="centerInside"
-        android:layout_margin="10dp"
-        app:layout_constraintDimensionRatio="1.774:1"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/footer"
+        app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <View
