@@ -38,7 +38,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         this.taskList = taskList;
         this.completable = completable;
 
-        updateVisibility();
+        if (completable)
+            updateVisibility();
     }
 
     @NonNull
