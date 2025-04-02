@@ -47,7 +47,6 @@ public class AddTaskActivity extends AppCompatActivity {
         dueDate.setOnClickListener(v -> showDatePicker());
         dueTime.setOnClickListener(v -> showTimePicker());
 
-
         addButton.setOnClickListener(view -> {
             String subjectText = subject.getText().toString().trim();
             String taskNameText = taskName.getText().toString().trim();

@@ -7,6 +7,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <View
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:elevation="10dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/title" />
+
     <ImageButton
         android:id="@+id/menu_icon"
         android:layout_width="0dp"
@@ -18,6 +28,7 @@
         android:background="@color/none"
         android:scaleType="centerInside"
         android:src="@drawable/menu"
+        android:elevation="10dp"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintWidth_percent="0.15"
         app:layout_constraintTop_toTopOf="parent"
@@ -29,6 +40,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
+        android:elevation="10dp"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintWidth_percent="0.15"
         app:layout_constraintTop_toTopOf="parent"
@@ -40,6 +52,7 @@
         android:layout_height="0dp"
         android:text="MemoMate"
         android:textColor="#FCE69B"
+        android:elevation="10dp"
         android:textStyle="bold"
         android:fontFamily="@font/bubble"
         android:autoSizeStepGranularity="1dp"
@@ -55,13 +68,65 @@
         app:layout_constraintBottom_toBottomOf="@id/menu_icon" />
 
     <View
+        android:id="@+id/date_and_time"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:textAlignment="center"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintHeight_percent="0.15" />
+
+    <org.memomate.ui.StrokedTextClockView
+        android:id="@+id/text_clock"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="50dp"
+        android:autoSizeMinTextSize="30dp"
+        android:autoSizeStepGranularity="1dp"
+        android:text="12:00 AM"
+        android:fontFamily="@font/bubble"
+        android:textColor="#C07041"
+        android:gravity="center"
+        android:format12Hour="hh:mm a"
+        android:format24Hour="HH:mm"
+        android:paddingHorizontal="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/date_and_time"
+        app:layout_constraintBottom_toTopOf="@id/text_date" />
+
+    <org.memomate.ui.StrokedTextClockView
+        android:id="@+id/text_date"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="30dp"
+        android:autoSizeMinTextSize="10dp"
+        android:autoSizeStepGranularity="1dp"
+        android:format12Hour="EEE, MMM d"
+        android:format24Hour="EEE, MMM d"
+        android:textColor="#C07041"
+        android:fontFamily="@font/bubble"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_clock"
+        app:layout_constraintBottom_toBottomOf="@id/date_and_time" />
+
+    <View
         android:id="@+id/task_div"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_marginStart="15dp"
         app:layout_constraintHeight_percent="0.2"
-        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/date_and_time"
         app:layout_constraintEnd_toStartOf="@id/streak_div"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -95,12 +160,11 @@
         android:id="@+id/streak_div"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
         app:layout_constraintHeight_percent="0.2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/task_div"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toTopOf="@id/task_div" />
 
     <org.memomate.ui.StrokedTextView
         android:id="@+id/streak_title"
@@ -132,13 +196,52 @@
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="15dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tasks_count"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/footer"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="15dp"
         android:scrollbars="vertical"/>
+
+    <View
+        android:id="@+id/content_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="15dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tasks_count"
+        app:layout_constraintBottom_toTopOf="@+id/footer"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <org.memomate.ui.StrokedTextView
+        android:id="@+id/no_available_task_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_marginTop="10dp"
+        android:textSize="30sp"
+        android:text="Tasks completed"
+        android:fontFamily="@font/bubble"
+        android:textColor="#CDE8DB"
+        android:padding="10dp"
+        app:layout_constraintVertical_bias="0.7"
+        app:layout_constraintStart_toStartOf="@id/content_view"
+        app:layout_constraintTop_toTopOf="@id/content_view"
+        app:layout_constraintBottom_toBottomOf="@id/content_view"
+        app:layout_constraintEnd_toEndOf="@id/content_view" />
+
+    <ImageView
+        android:id="@+id/task_completed_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/task_completed"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="@id/no_available_task_text"
+        app:layout_constraintEnd_toEndOf="@id/no_available_task_text"
+        app:layout_constraintBottom_toTopOf="@id/no_available_task_text"
+        app:layout_constraintHeight_percent="0.15" />
 
     <View
         android:id="@+id/footer"
@@ -160,7 +263,6 @@
         android:scaleType="centerInside"
         android:layout_margin="10dp"
         app:layout_constraintDimensionRatio="1.774:1"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/footer"
@@ -168,7 +270,7 @@
 
     <View
         android:id="@+id/filter"
-        android:elevation="2dp"
+        android:elevation="11dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0"
@@ -176,7 +278,7 @@
 
     <View
         android:id="@+id/drawer"
-        android:elevation="2dp"
+        android:elevation="11dp"
         android:layout_width="250dp"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -187,7 +289,7 @@
     <Button
         android:id="@+id/exit_drawer"
         android:textColor="@color/white"
-        android:elevation="4dp"
+        android:elevation="11dp"
         android:layout_width="0dp"
         android:alpha="0"
         android:layout_height="match_parent"
@@ -197,7 +299,7 @@
 
     <ImageView
         android:id="@+id/top"
-        android:elevation="10dp"
+        android:elevation="11dp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/top3"
@@ -210,7 +312,7 @@
 
     <ImageView
         android:id="@+id/home_icon"
-        android:elevation="4dp"
+        android:elevation="11dp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/home"
@@ -225,7 +327,7 @@
     <Button
         android:id="@+id/home"
         android:textColor="@color/white"
-        android:elevation="4dp"
+        android:elevation="11dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/none"
@@ -238,7 +340,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Home"
-        android:elevation="4dp"
+        android:elevation="11dp"
         android:fontFamily="@font/bubble"
         android:textColor="@color/white"
         android:textSize="40sp"
@@ -250,7 +352,7 @@
 
     <ImageView
         android:id="@+id/history_icon"
-        android:elevation="4dp"
+        android:elevation="11dp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/history"
@@ -265,7 +367,7 @@
     <Button
         android:id="@+id/history"
         android:textColor="@color/white"
-        android:elevation="4dp"
+        android:elevation="11dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/none"
@@ -278,7 +380,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="History"
-        android:elevation="4dp"
+        android:elevation="11dp"
         android:fontFamily="@font/bubble"
         android:textColor="@color/white"
         android:textSize="40sp"

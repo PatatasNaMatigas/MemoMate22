@@ -37,6 +37,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         this.context = context;
         this.taskList = taskList;
         this.completable = completable;
+
+        updateVisibility();
     }
 
     @NonNull
@@ -126,6 +128,19 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @Override
     public int getItemCount() {
         return taskList.size();
+    }
+
+    private void updateVisibility() {
+        View noAvailableTaskText = context.findViewById(R.id.no_available_task_text);
+        View taskCompletedIcon = context.findViewById(R.id.task_completed_icon);
+
+        if (taskList.isEmpty()) {
+            noAvailableTaskText.setVisibility(View.VISIBLE);
+            taskCompletedIcon.setVisibility(View.VISIBLE);
+        } else {
+            noAvailableTaskText.setVisibility(View.INVISIBLE);
+            taskCompletedIcon.setVisibility(View.INVISIBLE);
+        }
     }
 
     public class TaskViewHolder extends RecyclerView.ViewHolder {
@@ -226,6 +241,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                                     Log.e("MemoMate", "❌ Error closing file streams", e);
                                 }
                             }
+
+                            updateVisibility();
 
                         } else {
                             Log.e("MemoMate", "❌ Error: Failed to move file to completed_tasks folder.");

@@ -45,7 +45,7 @@ public class StrokedTextView extends androidx.appcompat.widget.AppCompatTextView
     private void setPaintToStroke() {
         strokePaint.setStyle(Paint.Style.STROKE);
         strokePaint.setStrokeWidth(16); // Thickness
-        strokePaint.setColor(Color.parseColor("#313030")); // Stroke color
+        strokePaint.setColor(Color.parseColor("#313030"));
         setLayerType(LAYER_TYPE_SOFTWARE, strokePaint); // Ensure smoothness
     }
 

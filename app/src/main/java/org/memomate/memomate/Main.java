@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -18,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.memomate.history.History;
 import org.memomate.notification.NotificationBuilder;
 import org.memomate.notification.NotificationScheduler;
+import org.memomate.ui.StrokedTextClockView;
+import org.memomate.ui.StrokedTextView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -148,6 +151,8 @@ public class Main extends AppCompatActivity {
         NotificationBuilder.createNotificationChannel(this);
         NotificationScheduler.scheduleNotifications(this);
         NotificationScheduler.rescheduleTasks(this);
+
+        ((StrokedTextClockView) findViewById(R.id.text_clock)).onTimeChanged(this::loadTasks);
     }
 
     @Override
@@ -164,10 +169,23 @@ public class Main extends AppCompatActivity {
         }
 
         File[] files = tasksDirectory.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
-        if (files == null) return;
+        if (files == null) {
+            return;
+        };
 
         tasks = files.length;
         ((TextView) findViewById(R.id.tasks_count)).setText(String.valueOf(files.length));
+
+        View noAvailableTaskText = findViewById(R.id.no_available_task_text);
+        View taskCompletedIcon = findViewById(R.id.task_completed_icon);
+
+        if (tasks == 0) {
+            noAvailableTaskText.setVisibility(View.VISIBLE);
+            taskCompletedIcon.setVisibility(View.VISIBLE);
+        } else {
+            noAvailableTaskText.setVisibility(View.INVISIBLE);
+            taskCompletedIcon.setVisibility(View.INVISIBLE);
+        }
 
         taskList.clear();
         for (File file : files) {
